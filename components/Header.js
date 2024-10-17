@@ -1,44 +1,55 @@
-import { Text, SafeAreaView, StyleSheet, FlatList} from 'react-native';
+import { Text, SafeAreaView, StyleSheet, FlatList, TouchableOpacity,View} from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
+import { useNavigation } from '@react-navigation/native';
+
+
 export default function Header(props) {
+  const navigation=useNavigation()
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.paragraph}>
+
         <FlatList
           data={props.links}
-          renderItem={({ item }) => <Text style={styles.paragraph}>{item}</Text>}
+          renderItem={({ item }) => <TouchableOpacity  style={styles.linkButton}><Text style={styles.linkText} >{item}</Text></TouchableOpacity>}
           horizontal={true}
-          
+
         />
-       <Entypo name="shopping-cart" size={24} color="black" style={styles.paragraph}/>
-       <Entypo name="magnifying-glass" size={24} color="black" style={styles.paragraph}/>
-       <FontAwesome name="user-circle" size={24} color="black" style={styles.paragraph} />
-      </Text>
+        </Text>
+      <View style={styles.iconContainer}>
+        <TouchableOpacity onPress={()=>navigation.navigate('Cart')}>  <Entypo name="shopping-cart" size={24} color="black" style={styles.icon} /></TouchableOpacity>
+        <TouchableOpacity>   <Entypo name="magnifying-glass" size={24} color="black" style={styles.icon} /></TouchableOpacity>
+        <TouchableOpacity >    <FontAwesome name="user-circle" size={24} color="black" style={styles.icon} /></TouchableOpacity>
+        </View>
+      
     </SafeAreaView>
+
   );
 }
- 
+
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 20,
-    flexDirection: 'row',
-    flexWrap: 'Wrap',
+    backgroundColor: '#f9f9f9',
+    elevation: 2,
   },
-  paragraph: {
-    color: 'black',
-    marginTop: 0,
-    fontSize: 14,
-    fontWeight: 'bold',
-    display: 'flex',
+  linkButton: {
+    marginRight: 15,
+  },
+  linkText: {
+    color: '#333',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  iconContainer: {
     flexDirection: 'row',
-    flexWrap: 'Wrap',
-    marginRight: 10,
-    marginTop:70,
-    justifyContent: 'space-around',
-    cursor:'pointer',
-    marginLeft:100,
+  },
+  icon: {
+    marginLeft: 20,
   },
 });
